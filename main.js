@@ -19,9 +19,7 @@ const subzero = {
 }
 
 function createPlayer(position, character) {
-    const fighter = {...character}
-
-    $arena = document.querySelector('.arenas');
+    const fighter = { ...character }
 
     const $player = document.createElement('div');
     $player.classList.add(`player${position}`);
@@ -51,8 +49,11 @@ function createPlayer(position, character) {
     $player.appendChild($progressbar);
     $player.appendChild($character);
 
-    $arena.appendChild($player);
+    return $player
 }
 
-createPlayer(1, subzero)
-createPlayer(2, scorpion)
+$arena = document.querySelector('.arenas');
+
+$arena.appendChild(createPlayer(1, subzero));
+$arena.appendChild(createPlayer(2, scorpion));
+
