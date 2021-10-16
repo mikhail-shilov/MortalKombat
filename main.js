@@ -1,6 +1,7 @@
-const scorpion = {
+const player1 = {
     name: 'Scorpion',
-    hp: 40,
+    position: 1,
+    hp: 100,
     img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
     weapon: ['snake'],
     attack: function () {
@@ -8,8 +9,9 @@ const scorpion = {
     }
 }
 
-const subzero = {
+const player2 = {
     name: 'Subzero',
+    position: 2,
     hp: 100,
     img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
     weapon: ['frost'],
@@ -18,11 +20,11 @@ const subzero = {
     }
 }
 
-function createPlayer(position, character) {
+function createPlayer(character) {
     const fighter = { ...character }
 
     const $player = document.createElement('div');
-    $player.classList.add(`player${position}`);
+    $player.classList.add(`player${fighter.position}`);
 
     const $progressbar = document.createElement('div');
     $progressbar.classList.add(`progressbar`);
@@ -53,7 +55,19 @@ function createPlayer(position, character) {
 }
 
 $arena = document.querySelector('.arenas');
+$randomButton = document.querySelector('.button');
 
-$arena.appendChild(createPlayer(1, subzero));
-$arena.appendChild(createPlayer(2, scorpion));
+const changeHP = function(player) {
+    player.hp -= Math.ceil(Math.random() * 20);
+    const $playerLife = document.querySelector(`.player${player.position} .life`);
+    $playerLife.style.width = player.hp > 0 ? `${player.hp}%`: '0%';
+}
+
+$randomButton.addEventListener('click', function() {
+    changeHP(player1);
+    changeHP(player2);
+})
+
+$arena.appendChild(createPlayer(player1));
+$arena.appendChild(createPlayer(player2));
 
