@@ -57,15 +57,39 @@ function createPlayer(character) {
 $arena = document.querySelector('.arenas');
 $randomButton = document.querySelector('.button');
 
-const changeHP = function(player) {
+const changeHP = function (player) {
     player.hp -= Math.ceil(Math.random() * 20);
     const $playerLife = document.querySelector(`.player${player.position} .life`);
-    $playerLife.style.width = player.hp > 0 ? `${player.hp}%`: '0%';
+    $playerLife.style.width = player.hp > 0 ? `${player.hp}%` : '0%';
 }
 
-$randomButton.addEventListener('click', function() {
+const playerWin = function (name) {
+    const $wintitle = document.createElement('div')
+    $wintitle.classList.add('winTitle')
+    $wintitle.innerText = `${name} wins!`
+    $randomButton.disabled = true
+    return $wintitle
+}
+
+const checkHP = function () {
+    if (player1.hp <= 0 && player2.hp <= 0) {
+        console.log('World crashed!')
+        $arena.appendChild(playerWin('No one'))
+    } else {
+        if (player1.hp <= 0) {
+            $arena.appendChild(playerWin(player2.name))
+        }
+
+        if (player2.hp <= 0 && player2.hp <= 0) {
+            $arena.appendChild(playerWin(player1.name))
+        }
+    }
+}
+
+$randomButton.addEventListener('click', function () {
     changeHP(player1);
     changeHP(player2);
+    checkHP();
 })
 
 $arena.appendChild(createPlayer(player1));
