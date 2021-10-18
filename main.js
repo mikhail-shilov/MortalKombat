@@ -100,7 +100,7 @@ const displayOutcomeMessage = function (msg) {
     return $wintitle;
 }
 
-const determinationWinner = function () {
+const determinateWinner = function () {
     if (player1.hp <= 0 && player2.hp <= 0) {
         $arena.appendChild(displayOutcomeMessage('Draw'));
     } else {
@@ -121,7 +121,7 @@ $randomButton.addEventListener('click', function () {
 
     if (player1.hp === 0 || player2.hp === 0) {
         $randomButton.disabled = true;
-        determinationWinner();
+        determinateWinner();
         $arena.appendChild(createReloadButton());
     }
 
