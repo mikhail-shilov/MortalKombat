@@ -1,3 +1,25 @@
+function getRandom(range) {
+    return Math.ceil(Math.random() * range)
+}
+
+function changeHP(hp) {
+    this.hp -= hp;
+    if (this.hp < 0) {
+        this.hp = 0;
+    }
+    console.log(this.hp)
+}
+
+function elHP() {
+    const $playerLife = document.querySelector(`.player${this.position} .life`);
+    console.log($playerLife)
+    return $playerLife
+}
+
+function renderHP(el) {
+    el.style.width = `${this.hp}%`;
+}
+
 const player1 = {
     name: 'Scorpion',
     position: 1,
@@ -6,7 +28,10 @@ const player1 = {
     weapon: ['snake'],
     attack: function () {
         console.log(`${this.name} fight!`)
-    }
+    },
+    changeHP: changeHP,
+    elHP: elHP,
+    renderHP: renderHP
 }
 
 const player2 = {
@@ -17,7 +42,10 @@ const player2 = {
     weapon: ['frost'],
     attack: function () {
         console.log(`${this.name} fight!`)
-    }
+    },
+    changeHP: changeHP,
+    elHP: elHP,
+    renderHP: renderHP
 }
 
 function createPlayer(character) {
@@ -57,12 +85,6 @@ function createPlayer(character) {
 $arena = document.querySelector('.arenas');
 $randomButton = document.querySelector('.button');
 
-const changeHP = function (player) {
-    player.hp -= Math.ceil(Math.random() * 20);
-    const $playerLife = document.querySelector(`.player${player.position} .life`);
-    $playerLife.style.width = player.hp > 0 ? `${player.hp}%` : '0%';
-}
-
 const playerWin = function (name) {
     const $wintitle = document.createElement('div')
     $wintitle.classList.add('winTitle')
@@ -87,9 +109,15 @@ const checkHP = function () {
 }
 
 $randomButton.addEventListener('click', function () {
-    changeHP(player1);
-    changeHP(player2);
-    checkHP();
+    player1.changeHP(getRandom(20));
+    player1.renderHP(player1.elHP())
+    player2.changeHP(getRandom(20));
+    player2.renderHP(player2.elHP())
+
+
+
+
+
 })
 
 $arena.appendChild(createPlayer(player1));
