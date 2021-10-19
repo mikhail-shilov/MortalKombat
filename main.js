@@ -1,3 +1,19 @@
+function getRandom(range) {
+    return Math.ceil(Math.random() * range)
+}
+
+function changeHP(hp) {
+    this.hp = this.hp < hp ? 0 : this.hp - hp;
+}
+
+function elHP() {
+    return document.querySelector(`.player${this.position} .life`);
+}
+
+function renderHP(el) {
+    el.style.width = `${this.hp}%`;
+}
+
 const player1 = {
     name: 'Scorpion',
     position: 1,
@@ -6,7 +22,10 @@ const player1 = {
     weapon: ['snake'],
     attack: function () {
         console.log(`${this.name} fight!`)
-    }
+    },
+    changeHP: changeHP,
+    elHP: elHP,
+    renderHP: renderHP
 }
 
 const player2 = {
@@ -17,11 +36,14 @@ const player2 = {
     weapon: ['frost'],
     attack: function () {
         console.log(`${this.name} fight!`)
-    }
+    },
+    changeHP: changeHP,
+    elHP: elHP,
+    renderHP: renderHP
 }
 
 function createPlayer(character) {
-    const fighter = { ...character }
+    const fighter = { ...character };
 
     const $player = document.createElement('div');
     $player.classList.add(`player${fighter.position}`);
@@ -51,47 +73,64 @@ function createPlayer(character) {
     $player.appendChild($progressbar);
     $player.appendChild($character);
 
-    return $player
+    return $player;
+}
+
+function createReloadButton() {
+    const $reloadWrap = document.createElement('div');
+    $reloadWrap.classList.add('reloadWrap');
+
+    const $button = document.createElement('button');
+    $button.classList.add('button');
+    $button.innerText = 'Restart';
+    $button.addEventListener('click', function () {
+        window.location.reload();
+    })
+    $reloadWrap.appendChild($button);
+    return $reloadWrap;
 }
 
 $arena = document.querySelector('.arenas');
 $randomButton = document.querySelector('.button');
 
-const changeHP = function (player) {
-    player.hp -= Math.ceil(Math.random() * 20);
-    const $playerLife = document.querySelector(`.player${player.position} .life`);
-    $playerLife.style.width = player.hp > 0 ? `${player.hp}%` : '0%';
+const displayOutcomeMessage = function (msg) {
+    const $wintitle = document.createElement('div');
+    $wintitle.classList.add('winTitle');
+    $wintitle.innerText = msg;
+    return $wintitle;
 }
 
-const playerWin = function (name) {
-    const $wintitle = document.createElement('div')
-    $wintitle.classList.add('winTitle')
-    $wintitle.innerText = `${name} wins!`
-    $randomButton.disabled = true
-    return $wintitle
-}
-
-const checkHP = function () {
+const determinateWinner = function () {
     if (player1.hp <= 0 && player2.hp <= 0) {
-        console.log('World crashed!')
-        $arena.appendChild(playerWin('No one'))
+        $arena.appendChild(displayOutcomeMessage('Draw'));
     } else {
         if (player1.hp <= 0) {
-            $arena.appendChild(playerWin(player2.name))
+            $arena.appendChild(displayOutcomeMessage(`${player2.name} wins!`));
         }
-
-        if (player2.hp <= 0 && player2.hp <= 0) {
-            $arena.appendChild(playerWin(player1.name))
+        if (player2.hp <= 0) {
+            $arena.appendChild(displayOutcomeMessage(`${player1.name} wins!`));
         }
     }
 }
 
 $randomButton.addEventListener('click', function () {
-    changeHP(player1);
-    changeHP(player2);
-    checkHP();
+    player1.changeHP(getRandom(20));
+    player1.renderHP(player1.elHP());
+    player2.changeHP(getRandom(20));
+    player2.renderHP(player2.elHP());
+
+    if (player1.hp === 0 || player2.hp === 0) {
+        $randomButton.disabled = true;
+        determinateWinner();
+        $arena.appendChild(createReloadButton());
+    }
+
+
+
+
+
+
 })
 
 $arena.appendChild(createPlayer(player1));
 $arena.appendChild(createPlayer(player2));
-
