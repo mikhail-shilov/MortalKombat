@@ -51,7 +51,10 @@ function createLogMessage($elem, type, attacker, defencer, damage, remain) {
     };
 
     actualDate = new Date;
-    actualTime = `${actualDate.getHours()}:${actualDate.getMinutes()}:${actualDate.getSeconds()}`
+    function normalize(num) {
+        return num.toString().length > 1 ? num : `0${num}`
+    }
+    actualTime = `${normalize(actualDate.getHours())}:${normalize(actualDate.getMinutes())}:${normalize(actualDate.getSeconds())}`
 
     let message = '';
     switch (type) {
