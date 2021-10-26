@@ -10,25 +10,10 @@ const $chat = document.querySelector('.chat');
 const $control = document.querySelector('.control');
 
 const player1 = initPlayer(getRandomPlayer(), 1);
-const player2 = initPlayer(getRandomPlayer(), 2);
 $arena.appendChild(createPlayer(player1));
+
+const player2 = initPlayer(getRandomPlayer(), 2);
 $arena.appendChild(createPlayer(player2));
-
-const determinateWinner = function () {
-    if (player1.hp <= 0 && player2.hp <= 0) {
-        $arena.appendChild(createOutcomeMessage('Draw'));
-    } else {
-        if (player1.hp <= 0) {
-            $arena.appendChild(createOutcomeMessage(`${player2.name} wins!`));
-            createLogMessage($chat, 'end', player2.name, player1.name);
-        }
-        if (player2.hp <= 0) {
-            $arena.appendChild(createOutcomeMessage(`${player1.name} wins!`));
-            createLogMessage($chat, 'end', player1.name, player2.name);
-
-        }
-    }
-};
 
 $control.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -54,9 +39,20 @@ $control.addEventListener('submit', function (event) {
     clearControl($control);
 
     if (player1.hp === 0 || player2.hp === 0) {
-        disableControl($control);
-        determinateWinner();
+        if (player1.hp <= 0 && player2.hp <= 0) {
+            $arena.appendChild(createOutcomeMessage('Draw'));
+        } else {
+            if (player1.hp <= 0) {
+                $arena.appendChild(createOutcomeMessage(`${player2.name} wins!`));
+                createLogMessage($chat, 'end', player2.name, player1.name);
+            }
+            if (player2.hp <= 0) {
+                $arena.appendChild(createOutcomeMessage(`${player1.name} wins!`));
+                createLogMessage($chat, 'end', player1.name, player2.name);
+            }
+        }
         $arena.appendChild(createReloadButton());
+        disableControl($control);
     }
 });
 
