@@ -1,6 +1,4 @@
-export function createPlayer(character) {
-    const { position, hp, name, img } = character;
-
+export function createPlayer({ position, hp, name, img }) {
     const $player = document.createElement('div');
     $player.classList.add(`player${position}`);
 
