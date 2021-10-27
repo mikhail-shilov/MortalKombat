@@ -21,9 +21,9 @@ export const characters = [
 
 let choosenCharacters = [];
 
-export function getRandomPlayer() {
+export const getRandomPlayer = () => {
     const availableCaracters = characters.filter((item, index) => !choosenCharacters.includes(index));
     const choosenIndex = getRandom(availableCaracters.length) - 1;
     choosenCharacters = [...choosenCharacters, choosenIndex];
     return availableCaracters[choosenIndex];
-}
+};

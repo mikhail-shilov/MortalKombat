@@ -1,6 +1,6 @@
 import { getRandom } from "./tools.js";
 
-export function createLogMessage($elem, type, attacker, defencer, damage, remain) {
+export const createLogMessage = ($elem, type, attacker, defencer, damage, remain) => {
     const logs = {
         start: 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',
         end: [

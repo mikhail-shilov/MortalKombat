@@ -1,7 +1,7 @@
 import { getRandom } from "./tools.js";
 import { HIT, ATTACK } from "./coefficients.js";
 
-export function doRandomAttack() {
+export const doRandomAttack = () => {
     const hit = ATTACK[getRandom(3) - 1];
     const block = ATTACK[getRandom(3) - 1];
 
@@ -10,4 +10,4 @@ export function doRandomAttack() {
         hit,
         block
     };
-}
+};

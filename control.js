@@ -1,7 +1,7 @@
 import { getRandom } from "./tools.js";
 import { HIT } from "./coefficients.js";
 
-export function readControl(form) {
+export const readControl = (form) => {
     const formData = {};
     for (let item of form) {
         if (item.checked === true && item.name === 'hit') {
@@ -13,16 +13,16 @@ export function readControl(form) {
         }
     }
     return formData;
-}
+};
 
-export function clearControl(form) {
+export const clearControl = (form) => {
     for (let item of form) {
         item.checked = false;
     }
-}
+};
 
-export function disableControl(form) {
+export const disableControl = (form) => {
     for (let item of form) {
         item.disabled = true;
     }
-}
+};
