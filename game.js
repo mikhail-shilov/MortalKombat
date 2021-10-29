@@ -2,7 +2,7 @@ import { Player } from "./players.js";
 import { getRandomPlayer, getPlayerByServer } from "./characters.js";
 import { createPlayer, createReloadButton, createOutcomeMessage } from "./dom.js";
 import { readControl, clearControl, disableControl } from "./control.js";
-import { generateRandomAttack, useExternalAI } from "./ai.js";
+import { useExternalAI } from "./ai.js";
 import { Log } from './log.js';
 
 export class Game {
@@ -29,10 +29,8 @@ export class Game {
         this.log.start(this.player1.name, this.player2.name);
     }
     async doKick() {
-
         const { hit, block: defence } = readControl(this.$control);
         const { player1:player1Attack, player2:player2Attack } = await useExternalAI(hit, defence);
-
 
         if (player1Attack.hit !== player2Attack.block) {
             this.player2.changeHP(player1Attack.value);

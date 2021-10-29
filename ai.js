@@ -1,7 +1,7 @@
 import { getRandom } from "./tools.js";
 import { HIT, ATTACK } from "./coefficients.js";
 
-export const generateRandomAttack = () => {
+const generateRandomAttack = () => {
     const hit = ATTACK[getRandom(3) - 1];
     const defence = ATTACK[getRandom(3) - 1];
     return {
