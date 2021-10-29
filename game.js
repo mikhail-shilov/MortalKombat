@@ -2,7 +2,7 @@ import { Player } from "./players.js";
 import { getRandomPlayer, getPlayerByServer } from "./characters.js";
 import { createPlayer, createReloadButton, createOutcomeMessage } from "./dom.js";
 import { readControl, clearControl, disableControl } from "./control.js";
-import { doRandomAttack, useExternalAI } from "./ai.js";
+import { generateRandomAttack, useExternalAI } from "./ai.js";
 import { Log } from './log.js';
 
 export class Game {

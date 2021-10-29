@@ -12,19 +12,23 @@ export const generateRandomAttack = () => {
 };
 
 export const useExternalAI = async (hit, defence) => {
-    const response = await fetch('http://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
-        method: 'POST',
-        body: JSON.stringify({ hit, defence })
-    }).then(response => response.json()).catch(() => {
+    let response = null;
+    try {
+        response = await fetch('http://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
+            method: 'POST',
+            body: JSON.stringify({ hit, defence })
+        });
+        response = response.json();
+    } catch(err) {
         console.log('External AI error. Artificial? Yes. Intelligence? No. Using random.');
-        return ({
+        response = {
             "player1": {
                 "value": getRandom(HIT[hit]),
                 "hit": "head",
                 "defence": "head"
             },
             "player2": generateRandomAttack()
-        });
-    });
+        };
+    }
     return response;
 };
