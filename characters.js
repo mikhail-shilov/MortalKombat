@@ -21,14 +21,14 @@ export const characters = [
 
 let choosenCharacters = [];
 
-export const getRandomPlayer = () => {
+export const getLocalPlayer = () => {
     const availableCaracters = characters.filter((item, index) => !choosenCharacters.includes(index));
     const choosenIndex = getRandom(availableCaracters.length) - 1;
     choosenCharacters = [...choosenCharacters, choosenIndex];
     return availableCaracters[choosenIndex];
 };
 
-export const getPlayerByServer = async () => {
+export const getRandomPlayer = async () => {
     const url = 'https://reactmarathon-api.herokuapp.com/api/mk/player/choose';
     const result = await fetch(url);
     return result.json();

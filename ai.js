@@ -19,7 +19,7 @@ export const useExternalAI = async (hit, defence) => {
             body: JSON.stringify({ hit, defence })
         });
         response = response.json();
-    } catch(err) {
+    } catch (err) {
         console.log('External AI error. Artificial? Yes. Intelligence? No. Using random.');
         response = {
             "player1": {
