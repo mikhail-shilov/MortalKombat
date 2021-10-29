@@ -1,8 +1,8 @@
 import { Player } from "./players.js";
-import { getRandomPlayer } from "./characters.js";
+import { getRandomPlayer, getPlayerByServer } from "./characters.js";
 import { createPlayer, createReloadButton, createOutcomeMessage } from "./dom.js";
 import { readControl, clearControl, disableControl } from "./control.js";
-import { doRandomAttack } from "./ai.js";
+import { doRandomAttack, useExternalAI } from "./ai.js";
 import { Log } from './log.js';
 
 export class Game {
@@ -14,24 +14,25 @@ export class Game {
         this.player1 = null;
         this.player2 = null;
     }
-    start() {
+    async start() {
         this.$control.addEventListener('submit', (event) => {
             event.preventDefault();
             this.doKick();
         });
 
-        this.player1 = new Player(1, getRandomPlayer());
+        this.player1 = new Player(1, JSON.parse(localStorage.getItem('player1')));
         this.$arena.appendChild(createPlayer(this.player1));
 
-        this.player2 = new Player(2, getRandomPlayer());
+        this.player2 = new Player(2, await getPlayerByServer());
         this.$arena.appendChild(createPlayer(this.player2));
 
-        //        createLogMessage(this.$chat, 'start', this.player1.name, this.player2.name);
         this.log.start(this.player1.name, this.player2.name);
     }
-    doKick() {
-        const player1Attack = readControl(this.$control);
-        const player2Attack = doRandomAttack();
+    async doKick() {
+
+        const { hit, block: defence } = readControl(this.$control);
+        const { player1:player1Attack, player2:player2Attack } = await useExternalAI(hit, defence);
+
 
         if (player1Attack.hit !== player2Attack.block) {
             this.player2.changeHP(player1Attack.value);

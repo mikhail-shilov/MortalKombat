@@ -1,4 +1,6 @@
-export function createPlayer({ position, hp, name, img }) {
+export function createPlayer(character) {
+    const { position, hp, name, img } = character;
+
     const $player = document.createElement('div');
     $player.classList.add(`player${position}`);
 
@@ -38,7 +40,7 @@ export function createReloadButton() {
     $button.classList.add('button');
     $button.innerText = 'Restart';
     $button.addEventListener('click', function () {
-        window.location.reload();
+        window.location.pathname = 'index.html';
     });
     $reloadWrap.appendChild($button);
     return $reloadWrap;

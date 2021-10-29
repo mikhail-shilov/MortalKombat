@@ -62,6 +62,9 @@ export class Log {
             .replace('[playerDefence]', defencer);
         this._updateDom(`${getTime()} - ${message}`);
     }
+    draw() {
+        this._updateDom(`${getTime()} - ${this.messages.draw}`);
+    }
     end(winner, looser) {
         const message = this.messages.end[getRandom(this.messages.end.length) - 1]
             .replace('[playerWins]', winner)
