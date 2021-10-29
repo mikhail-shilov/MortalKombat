@@ -84,4 +84,4 @@ export const createLogMessage = ($elem, type, attacker, defencer, damage, remain
 
     const $record = `<p>${message}</p>`;
     $elem.insertAdjacentHTML('afterbegin', $record);
-}
+};
