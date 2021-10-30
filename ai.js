@@ -12,6 +12,7 @@ const generateRandomAttack = () => {
 };
 
 export const useExternalAI = async (hit, defence) => {
+    console.log(hit,defence);
     let response = null;
     try {
         response = await fetch('http://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
