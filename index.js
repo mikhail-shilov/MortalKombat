@@ -18,7 +18,7 @@ const createElement = (tag, className) => {
 function createEmptyPlayerBlock() {
     const el = createElement('div', ['character', 'div11', 'disabled']);
     const img = createElement('img');
-    img.src = 'http://reactmarathon-api.herokuapp.com/assets/mk/avatar/11.png';
+    img.src = 'https://reactmarathon-api.herokuapp.com/assets/mk/avatar/11.png';
     el.appendChild(img);
     $parent.appendChild(el);
 }
@@ -57,7 +57,7 @@ async function init() {
             el.classList.add('active');
 
             setTimeout(() => {
-                window.location.pathname = 'arenas.html';
+                window.location.href = 'arenas.html';
             }, 500);
         });
 
